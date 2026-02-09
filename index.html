@@ -5,57 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Gift</title>
 
-<!-- Romantic Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
 <style>
 * { box-sizing: border-box; }
 
-body {
+html, body {
+  width: 100%;
+  height: 100%;
   margin: 0;
+}
+
+body {
   background: #000;
   font-family: 'Playfair Display', serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
+/* Fullscreen container */
 .story {
   background: #fff;
   width: 100%;
-  max-width: 420px;
-  min-height: 100vh;
-  padding: 20px;
+  height: 100%;
+  max-width: 600px;
+  max-height: 100vh;
+  padding: 30px 22px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Slides */
+/* Slide wrapper */
 .content {
   display: none;
-  flex: 1;
+  width: 100%;
   text-align: center;
-  justify-content: center;
-  flex-direction: column;
   animation: fadeUp 0.5s ease;
 }
 
 .content.active {
-  display: flex;
+  display: block;
 }
-
-.hidden { display: none; }
 
 /* Images */
 img {
-  width: clamp(160px, 45vw, 220px);
-  margin: 0 auto 12px;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto 14px;
+  display: block;
 }
 
 /* Text */
 .text {
-  font-size: 15px;
+  font-size: 16px;
   color: #555;
   margin-bottom: 18px;
 }
@@ -65,14 +71,14 @@ button {
   background: #e6c6d8;
   color: #5a2b46;
   border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 18px;
+  padding: 10px 18px;
+  font-size: 15px;
+  border-radius: 20px;
   cursor: pointer;
 }
 button:active { transform: scale(0.96); }
 
-/* Layout helpers */
+/* Helpers */
 .reply-row {
   display: flex;
   justify-content: flex-end;
@@ -81,46 +87,48 @@ button:active { transform: scale(0.96); }
   display: flex;
   justify-content: center;
   gap: 14px;
+  flex-wrap: wrap;
 }
-.option-btn {
-  background: #f1f1f1;
-  color: #444;
-}
+
+.option-btn { background: #f1f1f1; color: #444; }
+
 .sare-btn { text-decoration: underline; }
 
+/* Back emoji */
 .back-emoji {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  font-size: 20px;
+  top: 18px;
+  left: 18px;
+  font-size: 22px;
   cursor: pointer;
 }
 
-/* Valentine slide */
+/* Valentines */
 .valentines {
   background: linear-gradient(180deg, #fff, #fff5f7);
-  position: relative;
+  padding: 20px 10px;
 }
 
 .valentines h1 {
   font-family: 'Dancing Script', cursive;
-  font-size: 30px;
+  font-size: 34px;
   color: #d6336c;
 }
 
-.valentines p {
-  font-size: 15px;
+.heart {
+  font-size: 44px;
+  margin: 12px 0;
+  animation: pulse 1.5s infinite;
 }
 
 /* Circular photo */
 .photo-frame {
-  width: min(220px, 70vw);
-  height: min(220px, 70vw);
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   padding: 6px;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   margin: 0 auto 16px;
-  animation: zoomIn 1.2s ease;
 }
 .photo-frame img {
   width: 100%;
@@ -129,35 +137,15 @@ button:active { transform: scale(0.96); }
   object-fit: cover;
 }
 
-/* Floating hearts background */
-.valentines::before {
-  content: "💖 💕 💘 💗 💞";
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.25;
-  animation: floatHearts 8s infinite linear;
-  pointer-events: none;
-}
-  .heart {
-  font-size: 42px;
-  margin-bottom: 12px;
-  animation: pulse 1.5s infinite;
-}
-
 /* Animations */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@keyframes zoomIn {
-  from { transform: scale(0.85); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-@keyframes floatHearts {
-  0% { transform: translate(-50%, 20px); }
-  100% { transform: translate(-50%, -120px); }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 /* Confetti */
@@ -170,14 +158,22 @@ button:active { transform: scale(0.96); }
 @keyframes fall {
   to { transform: translateY(100vh); }
 }
+
+/* Mobile tuning */
+@media (max-width: 480px) {
+  .story { padding: 20px 14px; }
+  .valentines h1 { font-size: 28px; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="story">
+<audio id="bgMusic" loop>
+  <source src="Golden_Sparrow.mp3" type="audio/mpeg">
+</audio>
 
-<!-- 🔽 YOUR SLIDES (UNCHANGED) 🔽 -->
+<div class="story">
 
 <!-- SLIDE 1 -->
 <div id="slide1" class="content active">
@@ -189,8 +185,8 @@ button:active { transform: scale(0.96); }
 </div>
 
 <!-- SLIDE 2 -->
-<div id="slide2" class="content hidden">
-  <div class="back-emoji" onclick="show('slide1')">⬅️</div>
+<div id="slide2" class="content">
+  <div class="back-emoji" onclick="show('slide1')">💞</div>
   <img src="1st.png">
   <div class="text">chusthava?</div>
   <div class="options">
@@ -200,18 +196,17 @@ button:active { transform: scale(0.96); }
 </div>
 
 <!-- SLIDE 3 -->
-<div id="slide3" class="content hidden">
-  <div class="back-emoji" onclick="show('slide2')">⬅️</div>
+<div id="slide3" class="content">
+  <div class="back-emoji" onclick="show('slide2')">💞</div>
   <img src="3rd.png">
   <div class="text">hammaya..</div>
   <div class="reply-row">
     <button onclick="show('slide5')">inthaki enti</button>
   </div>
 </div>
-
 <!-- SLIDE 4 -->
-<div id="slide4" class="content hidden">
-  <div class="back-emoji" onclick="show('slide2')">⬅️</div>
+<div id="slide4" class="content">
+  <div class="back-emoji" onclick="show('slide2')">💞</div>
   <img src="2nd.webp">
   <div class="text">pleaaase chudachu kada</div>
   <div class="reply-row">
@@ -220,15 +215,15 @@ button:active { transform: scale(0.96); }
 </div>
 
 <!-- SLIDE 5 -->
-<div id="slide5" class="content hidden">
-  <div class="back-emoji" onclick="show('slide3')">⬅️</div>
+<div id="slide5" class="content">
+  <div class="back-emoji" onclick="show('slide3')">💞</div>
   <img src="4th.png" onclick="show('slide6')" style="cursor:pointer">
   <div class="text">gift box click cheyandi</div>
 </div>
 
 <!-- SLIDE 6 -->
-<div id="slide6" class="content hidden">
-  <div class="back-emoji" onclick="show('slide5')">⬅️</div>
+<div id="slide6" class="content">
+  <div class="back-emoji" onclick="show('slide5')">💞</div>
   <img src="5th.png">
   <div class="text">phool for my fooool,<br>sarsarle fool em kadu le.</div>
   <div class="reply-row">
@@ -237,14 +232,14 @@ button:active { transform: scale(0.96); }
 </div>
 
 <!-- SLIDE 7 -->
-<div id="slide7" class="content hidden">
-  <div class="back-emoji" onclick="show('slide6')">⬅️</div>
+<div id="slide7" class="content">
+  <div class="back-emoji" onclick="show('slide6')">💞</div>
   <img src="6th.png" onclick="show('slide8')" style="cursor:pointer">
   <div class="text">SMILEEE..</div>
 </div>
 
 <!-- SLIDE 8 -->
-<div id="slide8" class="content hidden valentines">
+<div id="slide8" class="content valentines">
   <div class="photo-frame">
     <img src="final.jpeg">
   </div>
@@ -252,48 +247,50 @@ button:active { transform: scale(0.96); }
   <div class="heart">💖</div>
   <h1>Happy Valentine’s Day</h1>
   <p>To the one who makes my world brighter every day ✨</p>
+
+  <div class="options">
+    <button onclick="restart()">Replay</button>
+    <button onclick="muteMusic(this)">🔇</button>
+  </div>
 </div>
 
 </div>
 
 <script>
+const music = document.getElementById('bgMusic');
+music.volume = 0.5;
+
+let musicStarted = false;
 let slides = document.querySelectorAll('.content');
 let current = 0;
 
+document.querySelector('.story').addEventListener('click', () => {
+  if (!musicStarted) {
+    music.play();
+    musicStarted = true;
+  }
+}, { once: true });
+
 function show(id) {
   slides[current].classList.remove('active');
-  slides[current].classList.add('hidden');
   current = [...slides].findIndex(s => s.id === id);
-  slides[current].classList.remove('hidden');
   slides[current].classList.add('active');
-
-  // Camera flash + auto move
-  if (id === 'slide7') {
-    document.body.style.background = '#fff';
-    setTimeout(() => document.body.style.background = '#000', 120);
-    setTimeout(() => show('slide8'), 1200);
-  }
-
-  // Final slide effects
-  if (id === 'slide8') {
-    confetti();
-  }
+  if (id === 'slide8') confetti();
 }
 
-/* Reel-style tap anywhere */
-document.querySelector('.story').addEventListener('click', e => {
-  if (slides[current].classList.contains('valentines')) return;
-  if (e.target.tagName !== 'BUTTON' && !e.target.onclick) {
-    if (slides[current + 1]) {
-      slides[current].classList.remove('active');
-      slides[current + 1].classList.add('active');
-      slides[current].classList.add('hidden');
-      current++;
-    }
-  }
-});
+function restart() {
+  music.currentTime = 0;
+  music.play();
+  slides[current].classList.remove('active');
+  current = 0;
+  slides[0].classList.add('active');
+}
 
-/* Confetti */
+function muteMusic(btn) {
+  music.muted = !music.muted;
+  btn.innerText = music.muted ? "🔊" : "🔇";
+}
+
 function confetti() {
   for (let i = 0; i < 40; i++) {
     let c = document.createElement('div');
