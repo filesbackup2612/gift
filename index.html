@@ -90,6 +90,17 @@ button:active { transform: scale(0.96); }
   display: flex;
   justify-content: flex-end;
 }
+.typing-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  word-spacing: 2px;
+  color: #5a2b46;
+  line-height: 1.6;
+  min-height: 90px; /* prevents layout jump */
+  white-space: pre-line;
+}
+
+
 .replay-btn {
   position: absolute;
   top: 16px;
@@ -309,13 +320,13 @@ button:active { transform: scale(0.96); }
 <!-- YES MODAL -->
 <div class="modal" id="yesModal">
   <div class="modal-box">
-    <h2>💖 I knew you would click YES 💖</h2>
-    <p>
-      The one who makes my world brighter every day ✨<br><br>
-      Thank you for choosing me 💕
-    </p>
-    <button onclick="closeModal()">Forever 💍</button>
-  </div>
+  <h2>💖 I knew you would click YES 💖</h2>
+
+  <p id="typeText" class="typing-text"></p>
+
+  <button onclick="closeModal()">Forever 💍</button>
+</div>
+
 </div>
 
 </div>
@@ -358,7 +369,8 @@ function yesClicked() {
 
   setTimeout(() => {
     document.getElementById("yesModal").style.display = "flex";
-  }, 900); // after ring bounce
+    startTyping();   // 💌 start typing here
+  }, 900);
 }
 
 
@@ -369,6 +381,31 @@ function ringDrop() {
   document.body.appendChild(ring);
   setTimeout(() => ring.remove(), 2000);
 }
+const messageText =
+`The one who makes my world brighter every day ✨
+
+Thank you for choosing me 💕`;
+
+
+let typingInterval;
+
+function startTyping() {
+  const el = document.getElementById("typeText");
+  el.textContent = "";   // IMPORTANT
+  let i = 0;
+
+  clearInterval(typingInterval);
+
+  typingInterval = setInterval(() => {
+    el.textContent += messageText[i];  // IMPORTANT
+    i++;
+    if (i >= messageText.length) {
+      clearInterval(typingInterval);
+    }
+  }, 45);
+}
+
+
 function runAway(btn) {
   const parent = btn.parentElement;
   const maxX = parent.offsetWidth / 2;
